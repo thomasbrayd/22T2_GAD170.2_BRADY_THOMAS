@@ -24,11 +24,11 @@ public class LevelingSystem : MonoBehaviour
     public void SetDefaultValues()
     {
         // set our current level to 1
-
+        currentLevel = 1;
         // set our current XP to zero
-
+        currentXp = 0;
         // set our current XP Threshold to be our level multiplied by our 100.
-
+        currentXPThreshold = (currentLevel * 100);
     }
 
     /// <summary>
@@ -38,9 +38,12 @@ public class LevelingSystem : MonoBehaviour
     public void AddXP(int xpGained)
     {
         // We want to be able to add on the xpGained onto our currentXp.
-
+        currentXp += xpGained;
         // We probably want to check to see if we've gained enough xp to trigger a level up to occur.
+        if(currentXp > currentXPThreshold)
+        {
 
+        }
         // if we do then let's call our level up function.
     }
 

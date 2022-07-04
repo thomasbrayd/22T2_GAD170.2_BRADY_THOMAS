@@ -12,6 +12,7 @@ using UnityEngine;
 public class StatsSystem : MonoBehaviour
 {
     public float playerHealth = 0;
+    public int statPool = 20;
 
     /// Our physical stats that determine our dancing stats.
     public int agility = 0;
@@ -33,14 +34,21 @@ public class StatsSystem : MonoBehaviour
     public void GeneratePhysicalStatsStats()
     {
         // Let's set up agility, intelligence and strength to some default Random values.
+        agility = Random.Range(0, statPool);
+        Debug.Log("Agility: " + agility);
+        intelligence = Random.Range(0, statPool - strength);
+        Debug.Log("Intelligence: " + intelligence);
+        strength = Random.Range(0, statPool - strength - agility);
+        Debug.Log("Strength: " + strength);
     }
-
+    
     /// <summary>
     /// This function should set our style, luck and ryhtmn to values
     /// based on our currrent agility,intelligence and strength.
     /// </summary>
     public void CalculateDancingStats()
     {
+        // create an agility multiplier should be set to 0.5
         float agilityMultiplier = 0.5f;
         // create a strength multiplier should be set to 1
         float strengthMultiplier = 1f;
