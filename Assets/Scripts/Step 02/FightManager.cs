@@ -22,16 +22,34 @@ public class FightManager : MonoBehaviour
     /// <param name="teamBCharacter"></param>
     private void DecideWinner(Character teamACharacter, Character teamBCharacter)
     {
-
         // so we are storing our two power levels of each of our characters.
         int playerOnePowerLevel = teamACharacter.myPowerSystem.ReturnMyDancePowerLevel();
         int playerTwoPowerLevel = teamBCharacter.myPowerSystem.ReturnMyDancePowerLevel();
 
-
         // We should probably determine here who has won, and who has lost by comparing their power levels.
-        // we should also do some damage or heal the appropriate characters.
-        // we could also give them some XP if we want to. 
         // so we have the character class, which means any variables,references and functions we can access.
+        if (playerOnePowerLevel > playerTwoPowerLevel)
+        {
+            // we should also do some damage or heal the appropriate characters.
+            teamBCharacter.myStatsSystem.ChangeHealth(playerTwoPowerLevel);
+
+            teamACharacter.myStatsSystem.DistributePhysicalStatsOnLevelUp(playerTwoPowerLevel);
+
+            // we could also give them some XP if we want to. 
+            teamACharacter.myLevelSystem.AddXP(playerOnePowerLevel);
+
+            Debug.Log("Player One Wins!");
+        }
+        else if (playerTwoPowerLevel > playerOnePowerLevel)
+        {
+            teamACharacter.myStatsSystem.ChangeHealth(playerOnePowerLevel);
+
+            teamBCharacter.myStatsSystem.DistributePhysicalStatsOnLevelUp(playerOnePowerLevel);
+
+            teamBCharacter.myLevelSystem.AddXP(playerTwoPowerLevel);
+
+            Debug.Log("Player Two Wins!");
+        }
 
         // By default it will automatically be a draw.
         string battleMessage = teamACharacter.charName.GetFullCharacterName() + " " + teamBCharacter.charName.GetFullCharacterName() + " fight is a draw";
@@ -40,8 +58,7 @@ public class FightManager : MonoBehaviour
         BattleLog.Log("team A draw", teamAColour);
         BattleLog.Log("team B draw", teamBColour);
         // here we are just telling the system who has won, and who has lost; for any other result other than a draw we should probably pass in false.
-        FightCompleted(teamBCharacter, teamACharacter, true);
-        
+        FightCompleted(teamBCharacter, teamACharacter, true);        
     }
 
 

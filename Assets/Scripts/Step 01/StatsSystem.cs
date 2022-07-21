@@ -11,21 +11,19 @@ using UnityEngine;
 /// </summary>
 public class StatsSystem : MonoBehaviour
 {
-    public float playerHealth = 0;
-    public int statPool = 20;
+    public float playerHealth = 0f;   
 
     /// Our physical stats that determine our dancing stats.
-    public int agility = 0;
-    public int intelligence = 0;
     public int strength = 0;
-
+    public int intelligence = 0;
+    public int agility = 0;
+    
     // Our variables used to determine our fighting power.
     public int style = 0;
-    public int luck = 0;
     public int rhythm = 0;
+    public int luck = 0;
 
     private Character character;
-
 
     /// <summary>
     /// This function should set our starting stats of Agility, Strength and Intelligence
@@ -33,13 +31,10 @@ public class StatsSystem : MonoBehaviour
     /// </summary>
     public void GeneratePhysicalStatsStats()
     {
-        // Let's set up agility, intelligence and strength to some default Random values.
-        agility = Random.Range(0, statPool);
-        Debug.Log("Agility: " + agility);
-        intelligence = Random.Range(0, statPool - strength);
-        Debug.Log("Intelligence: " + intelligence);
-        strength = Random.Range(0, statPool - strength - agility);
-        Debug.Log("Strength: " + strength);
+        // Let's set up strength, intelligence and agility to some default Random values.
+        strength = Random.Range(1, 21);
+        intelligence = Random.Range(1, 21);
+        agility = Random.Range(1, 21);    
     }
     
     /// <summary>
@@ -48,24 +43,29 @@ public class StatsSystem : MonoBehaviour
     /// </summary>
     public void CalculateDancingStats()
     {
-        // create an agility multiplier should be set to 0.5
-        float agilityMultiplier = 0.5f;
         // create a strength multiplier should be set to 1
         float strengthMultiplier = 1f;
-        // create an intelligence multiplier should be set to 2.
+        // create an intelligence multiplier should be set to 1.5
         float intelligenceMultiplier = 1.5f;
+        // create an agility multiplier should be set to 0.5
+        float agilityMultiplier = 0.5f;
 
         // Debug out our current multiplier values.
-        Debug.Log("agilMulti = " + agilityMultiplier + " strMulti = " + strengthMultiplier + " intelMulti = " + intelligenceMultiplier);
+        Debug.Log("Strength multiplier = " + strengthMultiplier);
+        Debug.Log("Intelligence multiplier = " + intelligenceMultiplier);
+        Debug.Log("Agility multiplier = " + agilityMultiplier);
 
         // now that we have some stats and our multiplier values let's calculate our style, luck and ryhtmn based on these values, hint your going to need to convert ints to floats, then floats to ints.
 
         // style should be based off our strength and be converted at a rate of 1 : 1.
-
+        style = (int)((int)strength * strengthMultiplier);
+        
         // luck should be based off our intelligence and be converted at a rate of 1 : 1.5f
-
+        luck = (int)((float)(int)intelligence * intelligenceMultiplier);
+        
         // rhythm should be based off our agility and be converted at a rate of 1 : 0.5.
-
+        rhythm = (int)((float)(int)agility * agilityMultiplier);
+        
     }
 
     /// <summary>
@@ -75,9 +75,9 @@ public class StatsSystem : MonoBehaviour
     public void ChangeHealth(float amount)
     {
         // We probably want to change our current health based on the amount coming in.
-
+        playerHealth -= amount;
         // currently we are just automatically removing our player...but we probably only want to do that if there is a character and their health is less than 0.
-        if(character != null)
+        if(playerHealth < 0)
         {
             character.RemoveFromTeam();
         }
@@ -88,10 +88,15 @@ public class StatsSystem : MonoBehaviour
     /// </summary>
     public void DistributePhysicalStatsOnLevelUp(int PointsPool)
     {
-        // we've been granted some more points to increase our stats by.
+        // we've been granted some more points to increase our stats by.      
         // let's share these points somewhat evenly or based on some formula to increase our current physical stats
+        strength = strength + (PointsPool / 3);
+        intelligence = intelligence + (PointsPool / 3);
+        agility = agility + (PointsPool / 3);
         // then let's recalculate our dancing stats again to process and update the new values.
-
+        style = (int)((float)(int)strength * 1);
+        luck = (int)((float)(int)intelligence * 1.5f);
+        rhythm = (int)((float)(int)agility * 0.5f);
     }
 
     #region No Mods Required

@@ -10,7 +10,6 @@ using UnityEngine;
 /// </summary>
 public class CharacterNameGenerator : MonoBehaviour
 {
- 
     [Header("Possible first names")]
     private List<string> firstNames = new List<string>(); // a list of all possible first names for us to use.
     [Header("Possible last names")]
@@ -31,7 +30,17 @@ public class CharacterNameGenerator : MonoBehaviour
     public void CreateNames()
     {
         // So here we would ideally want to be able to add some names to our first names, last names and nick names lists.
+        firstNames.Add("Kim ");
+        firstNames.Add("Harry ");
+        firstNames.Add("Klaasje ");
 
+        lastNames.Add("Kitsuragi");
+        lastNames.Add("Du-Bois");
+        lastNames.Add("Amandou");
+
+        nicknames.Add(" \"Tap-Dancing\" ");
+        nicknames.Add(" \"Disco Dancer\" ");
+        nicknames.Add("\"Dancefloor Gladiator\" ");      
     }
 
     /// <summary>
@@ -41,7 +50,9 @@ public class CharacterNameGenerator : MonoBehaviour
     public void SetIndividualCharacter(CharacterName character)
     {
         // So here rather than each character being called Blanky Blank Blank, we probably want it to be a random first,last and nickname
-
+        string CharacterName = firstNames[Random.Range(0, firstNames.Count)] + nicknames[Random.Range(0, nicknames.Count)] + lastNames[Random.Range(0, lastNames.Count)];
+        Debug.Log(CharacterName);
+        return;
     }
 
     /// <summary>
@@ -52,8 +63,16 @@ public class CharacterNameGenerator : MonoBehaviour
     public void SetTeamCharacterNames(List<CharacterName> teamCharacters)
     {
         // so here we have a list of character names coming in.
-        // we should probably loop over that list of charcter names, and then for each chacter set thei first, last and nickname a random one from our lists
+        // we should probably loop over that list of character names, and then for each chacter set their first, last and nickname a random one from our lists
+        //for (int i = 0; i < firstNames.Count; ++i)
+       // {
+       //     string str = CharacterName.GetFullCharacterName();
+       // }
+
+      
         // if you want to get fancy you could use another function within this script to help out here.
+
+
 
     }
 }
